@@ -1,8 +1,9 @@
+package glib.utils;
 import java.io.*;
 
 public class File {
 
-	static void editFile(String filePath, int offset, int[] value) throws Exception
+	public static void editFile(String filePath, int offset, int[] value) throws Exception
 	{
 		RandomAccessFile fileStore = new RandomAccessFile(filePath, "rw");
 		fileStore.seek(offset);
