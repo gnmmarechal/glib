@@ -1,3 +1,4 @@
+// Copyright Ryan Stansifer, Florida Institute of Technology
 public class WeightedGraph {
 
    private int [][]  edges;  // adjacency matrix

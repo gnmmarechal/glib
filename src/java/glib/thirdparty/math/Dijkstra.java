@@ -1,3 +1,4 @@
+// Copyright Ryan Stansifer, Florida Institute of Technology
 public class Dijkstra {
 
    // Dijkstra's algorithm to find shortest path from s to all other nodes
