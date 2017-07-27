@@ -64,6 +64,23 @@ public class Graph
 		return costMatrix[vertex1 - 1][vertex2 - 1];
 	}
 	
+	public static int[] getNeighboors(int vertex) throws Exception
+	{
+		List<Integer> retVal = new ArrayList<Integer>();
+		for (int i = 0; i < size(); i++)
+		{
+			if (i+1 != vertex && costMatrix[vertex-1][i] != Double.POSITIVE_INFINITY)
+				retVal.add(vertex);
+		}
+		int[] ret = new int[retVal.size()];
+		for (int i = 0; i < ret.length; i++)
+		{
+			ret[i] = retVal.get(i);
+		}
+		return ret;
+		
+		
+	}
 	public static int getVertexNumber(String vertexLabel) throws Exception
 	{
 		if (!matrixLabels.contains(vertexLabel)) throw new Exception("Label doesn't exist!");
@@ -134,19 +151,23 @@ public class Graph
 			lump.add(i);
 		}
 		return false;
-	}	
+	}
+	public static void test(Graph a) throws Exception
+	{
+		Dijkstra.printPath(a, Dijkstra.dijkstra(a, 1), 1, 2);
+	}
 }
 
 class Dijkstra {
 
    // Dijkstra's algorithm to find shortest path from s to all other nodes
-   public static int [] dijkstra (Graph G, int s) {
+   public static int [] dijkstra (Graph G, int s) throws Exception{
       final double [] dist = new double [G.size()];  // shortest known distance from "s"
       final int [] pred = new int [G.size()];  // preceeding node in path
       final boolean [] visited = new boolean [G.size()]; // all false initially
 
       for (int i=0; i<dist.length; i++) {
-         dist[i] = Integer.MAX_VALUE;
+         dist[i] = Double.POSITIVE_INFINITY;
       }
       dist[s] = 0;
 
@@ -156,7 +177,7 @@ class Dijkstra {
 
          // The shortest path to next is dist[next] and via pred[next].
 
-         final int [] n = G.neighbors (next);
+         final int [] n = G.getNeighboors(next);
          for (int j=0; j<n.length; j++) {
             final int v = n[j];
             final double d = dist[next] + G.getCost(next,v);
@@ -170,7 +191,7 @@ class Dijkstra {
    }
 
    private static int minVertex (double [] dist, boolean [] v) {
-      double x = Integer.MAX_VALUE;
+      double x = Double.POSITIVE_INFINITY;
       int y = -1;   // graph not connected, or no unvisited vertices
       for (int i=0; i<dist.length; i++) {
          if (!v[i] && dist[i]<x) {y=i; x=dist[i];}
@@ -178,7 +199,7 @@ class Dijkstra {
       return y;
    }
 
-   public static void printPath (Graph G, int [] pred, int s, int e) {
+   public static void printPath (Graph G, int [] pred, int s, int e) throws Exception{
       final java.util.ArrayList path = new java.util.ArrayList();
       int x = e;
       while (x!=s) {
