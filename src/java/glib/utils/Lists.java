@@ -1,10 +1,10 @@
+// Part of glib: https://github.com/gnmmarechal/glib
 package glib.utils;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class Lists
 {
-	public static boolean hasDuplicates(final String[] list)
+	public static boolean hasDuplicates(String[] list)
 	{
 		Set<String> lump = new HashSet<String>();
 		for (String i : list)
@@ -13,5 +13,25 @@ public class Lists
 			lump.add(i);
 		}
 		return false;
-	}	
+	}
+	
+	public <T> List<T> getIntersection(List<T> listA, List<T> listB)
+	{
+		List<T> retList = new ArrayList<T>();
+		
+		for (T t : listA)
+		{
+			if (listB.contains(t))
+				retList.add(t);
+		}
+		return retList;
+	}
+	
+	public <T> List<T> getUnion(List<T> listA, List<T> listB)
+	{
+		Set<T> retSet = new HashSet<T>();
+		retSet.addAll(listA);
+		retSet.addAll(listB);
+		return new ArrayList<T>(retSet);
+	}
 }
